@@ -1,9 +1,6 @@
-package com.example.myapplication
+package com.example.myapplication.ui
 
 import android.content.res.Configuration
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,19 +23,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-    import androidx.compose.ui.unit.sp
+import com.example.myapplication.R
 import com.example.myapplication.ui.theme.MyApplicationTheme
-
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MyApplicationTheme {
-                ProfileScreen()
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,6 +57,7 @@ fun ProfileScreen() {
         Column(
             modifier = Modifier
                 .padding(padding)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -107,18 +94,15 @@ fun ProfileScreen() {
                 )
             }
 
-
             Text(
-                text = "Ritchie Ray B Echavez Jr",
+                text = "Ritchie Ray B. Echavez Jr",
                 style = MaterialTheme.typography.headlineSmall
             )
             Text(
-                text = "BSIT Student",
-                style = MaterialTheme.typography.bodyLarge,
-                fontSize = 20.sp,
+                text = "IT Student",
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -141,7 +125,6 @@ fun ProfileScreen() {
                 }
             }
 
-            // Region E: Stats card
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.medium,
@@ -152,16 +135,15 @@ fun ProfileScreen() {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(19.dp),
+                        .padding(16.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    StatColumn(number = "146", label = "Posts")
-                    StatColumn(number = "5.3k", label = "Followers")
-                    StatColumn(number = "26", label = "Following")
+                    StatColumn(number = "128", label = "Posts")
+                    StatColumn(number = "4.2k", label = "Followers")
+                    StatColumn(number = "96", label = "Following")
                 }
             }
 
-            // Region F: Contact info card
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.medium,
@@ -169,9 +151,9 @@ fun ProfileScreen() {
                     containerColor = MaterialTheme.colorScheme.surface
                 )
             ) {
-                Column(modifier = Modifier.padding(18.dp)) {
-                    InfoRow(icon = Icons.Default.Email, text = "rechavez@liceo.edu.ph")
-                    Spacer(modifier = Modifier.height(13.dp))
+                Column(modifier = Modifier.padding(16.dp)) {
+                    InfoRow(icon = Icons.Default.Email, text = "rechavez27364@liceo.edu.ph")
+                    Spacer(modifier = Modifier.height(12.dp))
                     InfoRow(icon = Icons.Default.LocationOn, text = "Purok 2- Bayabas CDO")
                 }
             }
@@ -200,14 +182,10 @@ fun InfoRow(icon: ImageVector, text: String) {
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(24.dp)
+            tint = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.width(8.dp))
-        Text(
-            text = text,
-            fontSize = 18.sp
-        )
+        Text(text = text)
     }
 }
 
@@ -227,6 +205,31 @@ fun ProfileScreenPreviewLight() {
 @Composable
 fun ProfileScreenPreviewDark() {
     MyApplicationTheme(darkTheme = true) {
+        ProfileScreen()
+    }
+}
+
+// ===============================================
+// PALITAN ITONG DULO NG PROFILE.KT
+// ===============================================
+
+@Preview(
+    name = "Gray Mode",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    widthDp = 360,
+    heightDp = 740
+)
+@Preview(
+    name = "Dark Mode",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    widthDp = 360,
+    heightDp = 740
+)
+@Composable
+fun ProfileScreenPreview() {
+    MyApplicationTheme {
         ProfileScreen()
     }
 }

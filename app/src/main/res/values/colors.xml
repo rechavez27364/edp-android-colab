@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Default Colors -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,4 +8,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Profile UI Colors (Light Mode) -->
+    <!-- UPDATED: This is now a Light Gray (#EEEEEE) -->
+    <color name="bg_main">#EEEEEE</color>
+    <color name="top_bar_bg">#E9DDFF</color>
+    <color name="purple_primary">#6750A4</color>
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#4B5563</color>
 </resources>
