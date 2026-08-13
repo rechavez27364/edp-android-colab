@@ -1,173 +1,218 @@
 package com.example.myapplication
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun ProfileForm(state: ProfileUiState, viewModel: ProfileViewModel) {
+fun ProfileForm(
+    state: ProfileUiState,
+    viewModel: ProfileViewModel
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(16.dp)
             .verticalScroll(rememberScrollState())
-            .padding(20.dp)
     ) {
+
         Text(
-            text = "Edit Profile",
-            style = MaterialTheme.typography.headlineMedium,
+            text = "My Profile",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = state.name,
+            onValueChange = { viewModel.onNameChange(it) },
+            label = { Text("Full name") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = state.email,
+            onValueChange = { viewModel.onEmailChange(it) },
+            label = { Text("Email") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = state.contactNumber,
+            onValueChange = { viewModel.onContactChange(it) },
+            label = { Text("Contact number") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = state.address,
+            onValueChange = { viewModel.onAddressChange(it) },
+            label = { Text("Address") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = state.username,
+            onValueChange = { viewModel.onUsernameChange(it) },
+            label = { Text("Username") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Skills",
             fontWeight = FontWeight.Bold
         )
-        
-        Spacer(modifier = Modifier.height(24.dp))
 
-        StandardTextField(state.name, { viewModel.onNameChange(it) }, "Full Name", Icons.Default.Person)
-        StandardTextField(state.email, { viewModel.onEmailChange(it) }, "Email Address", Icons.Default.Email)
-        StandardTextField(state.contactNumber, { viewModel.onContactChange(it) }, "Contact Number", Icons.Default.Phone)
-        StandardTextField(state.address, { viewModel.onAddressChange(it) }, "Address", Icons.Default.Home)
-        StandardTextField(state.username, { viewModel.onUsernameChange(it) }, "Username", Icons.Default.AccountCircle)
+        Spacer(modifier = Modifier.height(8.dp))
 
-        Spacer(modifier = Modifier.height(32.dp))
-        
-        Text(text = "Skills", style = MaterialTheme.typography.titleMedium)
-        
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
         ) {
             OutlinedTextField(
                 value = state.newSkill,
                 onValueChange = { viewModel.onNewSkillChange(it) },
                 label = { Text("Add a skill") },
-                modifier = Modifier.weight(1f),
-                singleLine = true
+                modifier = Modifier.weight(1f)
             )
-            Spacer(modifier = Modifier.width(12.dp))
+
+            Spacer(modifier = Modifier.width(8.dp))
+
             Button(
-                onClick = { viewModel.addSkill() },
-                modifier = Modifier.height(56.dp)
+                onClick = { viewModel.addSkill() }
             ) {
                 Text("Add")
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Displaying skills in a simple column with remove buttons
         state.skills.forEach { skill ->
+
             Row(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "• $skill")
-                TextButton(onClick = { viewModel.removeSkill(skill) }) {
-                    Text("Remove", color = MaterialTheme.colorScheme.error)
+                Text(
+                    text = "• $skill",
+                    modifier = Modifier.weight(1f)
+                )
+
+                TextButton(
+                    onClick = {
+                        viewModel.removeSkill(skill)
+                    }
+                ) {
+                    Text("Remove")
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Button(
-            onClick = { viewModel.showPreview() },
-            modifier = Modifier.fillMaxWidth().height(50.dp)
+            onClick = {
+                viewModel.showPreview()
+            },
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Show Preview")
+            Text("Preview")
         }
-        
-        Spacer(modifier = Modifier.height(40.dp))
     }
 }
 
 @Composable
-fun StandardTextField(value: String, onValueChange: (String) -> Unit, label: String, icon: ImageVector) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(label) },
-        leadingIcon = { Icon(icon, contentDescription = null) },
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-        singleLine = true
-    )
-}
-
-@Composable
-fun ProfilePreview(state: ProfileUiState, onBack: () -> Unit) {
+fun ProfilePreview(
+    state: ProfileUiState,
+    onBack: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(16.dp)
             .verticalScroll(rememberScrollState())
-            .padding(24.dp)
     ) {
+
         Text(
-            text = "Profile Summary",
-            style = MaterialTheme.typography.headlineMedium,
+            text = "Profile Preview",
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
-        
-        Spacer(modifier = Modifier.height(32.dp))
 
-        InfoField("Name", state.name)
-        InfoField("Email", state.email)
-        InfoField("Contact", state.contactNumber)
-        InfoField("Address", state.address)
-        InfoField("Username", state.username)
+        Spacer(modifier = Modifier.height(12.dp))
 
-        Spacer(modifier = Modifier.height(24.dp))
-        
-        Text(text = "Skills", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+        Text("Name: ${state.name}")
+        Text("Email: ${state.email}")
+        Text("Contact: ${state.contactNumber}")
+        Text("Address: ${state.address}")
+        Text("Username: ${state.username}")
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Skills:",
+            fontWeight = FontWeight.Bold
+        )
+
         if (state.skills.isEmpty()) {
-            Text("None added")
+            Text("No skills added yet.")
         } else {
             state.skills.forEach { skill ->
-                Text(text = "• $skill", modifier = Modifier.padding(vertical = 2.dp))
+                Text("• $skill")
             }
         }
 
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedButton(
-            onClick = onBack,
-            modifier = Modifier.fillMaxWidth().height(50.dp)
+            onClick = onBack
         ) {
-            Text("Back to Edit")
+            Text("Back to edit")
         }
     }
 }
 
 @Composable
-fun InfoField(label: String, value: String) {
-    Column(modifier = Modifier.padding(vertical = 8.dp)) {
-        Text(text = label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
-        Text(text = if (value.isEmpty()) "Not provided" else value, style = MaterialTheme.typography.bodyLarge)
-        HorizontalDivider(modifier = Modifier.padding(top = 8.dp), thickness = 0.5.dp)
-    }
-}
-
-@Composable
-fun ProfileScreen(viewModel: ProfileViewModel = viewModel()) {
+fun ProfileScreen(
+    viewModel: ProfileViewModel = viewModel()
+) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    
-    Crossfade(targetState = state.isPreview, label = "Transition") { isPreview ->
-        if (isPreview) {
-            ProfilePreview(state = state, onBack = { viewModel.backToEdit() })
-        } else {
-            ProfileForm(state = state, viewModel = viewModel)
-        }
+
+    if (state.isPreview) {
+        ProfilePreview(
+            state = state,
+            onBack = {
+                viewModel.backToEdit()
+            }
+        )
+    } else {
+        ProfileForm(
+            state = state,
+            viewModel = viewModel
+        )
     }
 }
