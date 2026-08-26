@@ -58,7 +58,7 @@ fun ProfileForm(
             value = state.email,
             onValueChange = { viewModel.onEmailChange(it) },
             label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()  
         )
 
         OutlinedTextField(
