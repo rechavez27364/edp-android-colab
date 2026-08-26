@@ -24,7 +24,7 @@ fun DishListScreen(
     var dishBeingEdited by remember { mutableStateOf<Dish?>(null) }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("My Dishes", style = MaterialTheme.typography.headlineMedium)
+        Text("My Recipe Book", style = MaterialTheme.typography.headlineMedium)
         Spacer(Modifier.height(12.dp))
 
         // ---------- CREATE (given) ----------
